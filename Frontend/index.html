@@ -24,8 +24,8 @@
                         <i class="fa-solid fa-user" id="profile-icon"></i>
                         <div id="profile-dropdown" class="dropdown-content">
                             <p id="welcome-message">Hello, User!</p>
-                            <a id="Dashboard-anchor" href="/Frontend/Dashboard/dashboard.html">Dashboard</a>
-                            <a id="Login-anchor" href="/Frontend/login.html">Login</a>
+                            <a id="Dashboard-anchor">Dashboard</a>
+                            <a id="Login-anchor">Login</a>
                             <a id="logout-link"  href="#" >Logout</a>
                         </div>
                     </li>
@@ -153,7 +153,18 @@
             } else {
 
             }
+            
+            document.getElementById('Dashboard-anchor').addEventListener('click',()=>{
+                currentLink = window.location.href;
+                //console.log(`${currentLink.substring(0, currentLink.lastIndexOf('/'))}/Dashboard/dashboard.html`)
+                window.location.href = `${currentLink.substring(0, currentLink.lastIndexOf('/'))}/Dashboard/dashboard.html`;
+            });
 
+            document.getElementById('Login-anchor').addEventListener('click',()=>{
+                currentLink = window.location.href;
+                //console.log(`${currentLink.substring(0, currentLink.lastIndexOf('/'))}/login.html`)
+                window.location.href = `${currentLink.substring(0, currentLink.lastIndexOf('/'))}/login.html`;
+            })
             // Toggle profile dropdown visibility
             profileIcon.addEventListener('click', (event) => {
                 event.stopPropagation(); // Prevent click from propagating to document
@@ -174,8 +185,9 @@
                 e.preventDefault();
                 localStorage.removeItem('token');
                 localStorage.removeItem('userEmail');
+                localStorage.removeItem('userName');
                 // Redirect to login page or home page
-                window.location.href = '/Frontend/index.html';
+                window.location.href = '/';
             });
 
             // Toggle mobile navigation menu
