@@ -195,7 +195,7 @@
             const password = e.target.elements['login-password'].value;
 
             try {
-                const response = await axios.post('http://localhost:5001/api/auth/login', { email, password });
+                const response = await axios.post('https://backend-recipe-ms.onrender.com/api/auth/login', { email, password });
                 const data = response.data; // Axios puts the response body in .data
 
                 showMessageBox(data.message + " Redirecting...");
@@ -205,7 +205,8 @@
                 localStorage.setItem('userName', data.userName); // Store user email for dashboard
 
                 setTimeout(() => {
-                    window.location.href = '/Frontend/Dashboard/dashboard.html'; // Redirect to a protected dashboard
+                    currentURL = window.location.href;
+                    window.location.href = `${currentURL.substring(0,currentURL.lastIndexOf('/'))}/Dashboard/dashboard.html`; // Redirect to a protected dashboard
                 }, 1500);
             } catch (error) {
                 console.error('Error:', error);
@@ -221,7 +222,7 @@
             const password = e.target.elements['register-password'].value;
 
             try {
-                const response = await axios.post('http://localhost:5001/api/auth/register', { name, email, password });
+                const response = await axios.post('https://backend-recipe-ms.onrender.com/api/auth/register', { name, email, password });
                 const data = response.data; // Axios puts the response body in .data
 
                 showMessageBox(data.message + " You can now login.");
