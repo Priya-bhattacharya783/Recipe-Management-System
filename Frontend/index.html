@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=,l, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+    <title>Recipe Website</title>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <img src="./RecipeMSLogo.png" alt="Delicious Recipe" class="logo">
+            <!-- <h1 class="logo">Delicious Recipe</h1> -->
+            <nav>
+                <div class="menu-icon" id="menu-icon">&#9776;</div>
+                <ul class="nav-list" id="nav-list">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#About">About</a></li>
+                    <li><a href="#Recipe">Recipe</a></li>
+                    <li><a href="#Contact">Contact us</a></li>
+                    <!-- <li><a href="#">Buy</a></li> -->
+                    <li id="Profile-Container" class="dropdown">
+                        <i class="fa-solid fa-user" id="profile-icon"></i>
+                        <div id="profile-dropdown" class="dropdown-content">
+                            <p id="welcome-message">Hello, User!</p>
+                            <a id="Dashboard-anchor" href="/Frontend/Dashboard/dashboard.html">Dashboard</a>
+                            <a id="Login-anchor" href="/Frontend/login.html">Login</a>
+                            <a id="logout-link"  href="#" >Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <section class="hero">
+        <div class="hero-section">
+            <h2>Welcome to our recipe collections!</h2>
+            <p>Search any types of recipes to satisfy your craving..</p>
+
+            <form action="#" class="search-box">
+                <input type="text" placeholder="Enter a recipe name to explore our guidance">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </section>
+
+    <section class="smart-generator">
+        <h2>Let AI Help You Decide!</h2>
+        <p>
+            Have ingredients but unsure what to make? Use our **AI-powered smart recipe generator** to create delicious meals in seconds!
+        </p>
+        <button >Try the Smart Generator</button>
+    </section>
+
+    <section class="recipes" id="Recipe">
+        <h1>Featured Recipes</h1>
+        <div class="recipe-section">
+            <div class="recipe-card">
+                <img src="dish-1.jpg" alt="">
+                <h2>Strawberry Custard</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+                <a href="#">View Recipe</a>
+            </div>
+
+            <div class="recipe-card">
+                <img src="dish-2.jpg" alt="">
+                <h2>Strawberry Custard</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                <a href="#">View Recipe</a>
+            </div>
+
+            <div class="recipe-card">
+                <img src="dish-3.jpg" alt="">
+                <h2>Strawberry Custard</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+                <a href="#">View Recipe</a>
+            </div>
+
+            <div class="recipe-card">
+                <img src="dish-4.jpg" alt="">
+                <h2>Strawberry Custard</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+                <a href="#">View Recipe</a>
+            </div>
+
+            <div class="recipe-card">
+                <img src="fish-dish.jpg" alt="">
+                <h2>Strawberry Custard</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+                <a href="#">View Recipe</a>
+            </div>
+        </div>
+    </section>
+
+   <section class="about-us" id="About">
+        <h2>About Us</h2>
+        <p>
+            Welcome to <strong>Delicious Recipe</strong>! We’re here to make cooking easier, smarter, and more fun. Whether you're a home cook or a food enthusiast, our platform helps you find the perfect recipe based on your ingredients, cravings, or time.
+        </p>
+        <p>
+            With the power of our <strong>AI-powered Smart Recipe Generator</strong>, you’ll never wonder “what to cook” again. Just enter what you have or what you’re craving, and our intelligent system will instantly suggest recipes tailored to your needs.
+        </p>
+        <p>
+            Our <strong>Virtual Fridge</strong> helps you use what’s already in your kitchen — simply input your ingredients, and we’ll provide recipe options that reduce food waste and maximize flavor. With the <strong>Meal Planner</strong>, you can organize your weekly meals effortlessly and generate shopping lists in a click.
+        </p>
+        <p>
+            To support healthy living, our <strong>Smart Nutrition Analyzer</strong> offers detailed insights into the nutritional value of every dish, helping you make informed choices and track your goals easily.
+        </p>
+        <p>
+            Explore, experiment, and enjoy food like never before. Whether you're planning meals, checking nutrition, or using up leftovers, <strong>Your Site Name</strong> brings intelligence to your kitchen. Happy cooking! 🍳
+        </p>
+    </section>
+    <div class="footer" id="Contact">
+        <div class="foot">
+            <h2>Recipe Hub | Contact us</h2>
+
+            <div class="icons">
+                <a id="wsp-Logo" href="https://wa.me/8282927729" target="_blank">
+                    <img src="https://1000logos.net/wp-content/uploads/2021/04/WhatsApp-logo.png" alt="WhatsApp" />
+                </a>
+                <a href="mailto:priyabhattacharya2005@gmail.com" target="_blank">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_FDIGmrOKufJ8B_6XNbHRz5m_yBubLlpykw&usqp=CAU" alt="Email" />
+                </a>
+                </div>
+
+                <h3>Website Created and Designed by</h3>
+                <p>Priya Bhattacharya</p>
+            </div>
+    </div>
+
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const profileIcon = document.getElementById('profile-icon');
+            const profileDropdown = document.getElementById('profile-dropdown');
+            const welcomeMessage = document.getElementById('welcome-message');
+            const logoutLink = document.getElementById('logout-link');
+            const menuIcon = document.getElementById('menu-icon');
+            const navList = document.getElementById('nav-list');
+
+            // Check if user is logged in
+            const token = localStorage.getItem('token');
+            const userName = localStorage.getItem('userName'); // Assuming you store email during login
+
+            if (token && userName) {
+                // Display welcome message
+                welcomeMessage.textContent = `Hello, ${userName}!`; // Use part before @ as username
+                profileIcon.style.display = 'inline-block'; // Ensure profile icon is visible
+                logoutLink.style.display = 'block';
+                document.getElementById('Dashboard-anchor').style.display = 'block';
+                document.getElementById('Login-anchor').style.display = 'none';
+            } else {
+
+            }
+
+            // Toggle profile dropdown visibility
+            profileIcon.addEventListener('click', (event) => {
+                event.stopPropagation(); // Prevent click from propagating to document
+                profileDropdown.classList.toggle('hidden-dropdown');
+                profileDropdown.classList.toggle('show-dropdown');
+            });
+
+            // Hide dropdown when clicking outside
+            document.addEventListener('click', (event) => {
+                if (!profileDropdown.contains(event.target) && !profileIcon.contains(event.target)) {
+                    profileDropdown.classList.add('hidden-dropdown');
+                    profileDropdown.classList.remove('show-dropdown');
+                }
+            });
+
+            // Logout functionality
+            logoutLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                localStorage.removeItem('token');
+                localStorage.removeItem('userEmail');
+                // Redirect to login page or home page
+                window.location.href = '/Frontend/index.html';
+            });
+
+            // Toggle mobile navigation menu
+            menuIcon.addEventListener('click', () => {
+                navList.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
