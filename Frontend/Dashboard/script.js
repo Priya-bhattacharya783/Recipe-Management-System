@@ -86,7 +86,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     document.getElementById('home-link').addEventListener('click', ()=>{ // Changed 'home' to 'home-link' for consistency
-        window.location.href = '/Frontend/index.html'; // Assuming root is your homepage
+        currentURL = window.location.href;
+        modifiedURL = currentURL.substring(0,currentURL.lastIndexOf('/'));
+        FinalModifiedURL = modifiedURL.substring(0,modifiedURL.lastIndexOf('/'));
+        console.log(FinalModifiedURL);
+        window.location.href = `${FinalModifiedURL}/index.html`; // Redirect to a protected dashboard
     });
 
     // Function to get JWT token from localStorage
@@ -104,7 +108,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return;
             }
 
-            const response = await axios.get('http://localhost:5001/fridge-items', {
+            const response = await axios.get('https://backend-recipe-ms.onrender.com/fridge-items', {
                 headers: {
                     'x-auth-token': token
                 }
@@ -172,13 +176,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             let response;
             if (editingItemId) {
                 // Edit existing item
-                response = await axios.put(`http://localhost:5001/fridge-items/${editingItemId}`, { name, expiryDate }, {
+                response = await axios.put(`https://backend-recipe-ms.onrender.com/fridge-items/${editingItemId}`, { name, expiryDate }, {
                     headers: { 'x-auth-token': token }
                 });
                 alert('Item updated successfully!');
             } else {
                 // Add new item
-                response = await axios.post('http://localhost:5001/fridge-items', { name, expiryDate }, {
+                response = await axios.post('https://backend-recipe-ms.onrender.com/fridge-items', { name, expiryDate }, {
                     headers: { 'x-auth-token': token }
                 });
                 alert('Item added successfully!');
@@ -209,7 +213,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         alert('You are not authenticated. Please log in.');
                         return;
                     }
-                    await axios.delete(`http://localhost:5001/fridge-items/${itemIdToDelete}`, {
+                    await axios.delete(`https://backend-recipe-ms.onrender.com/fridge-items/${itemIdToDelete}`, {
                         headers: { 'x-auth-token': token }
                     });
                     alert('Item deleted successfully!');
@@ -263,7 +267,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             loadingIndicator.style.display = 'block';
 
             try {
-                const response = await axios.post('http://localhost:5001/api/nutrition-analyze', { recipeName });
+                const response = await axios.post('https://backend-recipe-ms.onrender.com/api/nutrition-analyze', { recipeName });
                 analyzedNutrition.textContent = response.data.analysis || 'Could not analyze recipe.';
             } catch (error) {
                 console.error('Error analyzing recipe:', error);
