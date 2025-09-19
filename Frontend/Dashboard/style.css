@@ -1,0 +1,263 @@
+/* Reset & Base */
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Navbar */
+.navbar {
+  background: linear-gradient(to right, #B22222, #800020);
+  color: #fff;
+  padding: 15px 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.menu-toggle {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  display: none;
+}
+
+.dashboard-title {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  background: linear-gradient(to bottom right, #E94D3C, #F87F3B);
+  color: white;
+  padding-top: 30px;
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s;
+  flex-shrink: 0;
+}
+
+.sidebar nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar nav ul li {
+  margin-bottom: 5px;
+}
+
+.sidebar-item {
+  display: block;
+  padding: 15px 25px;
+  color: white;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.sidebar-item:hover,
+.sidebar-item.active {
+  background-color: #ffffff33;
+  border-left: 5px solid white;
+}
+
+/* Dashboard container */
+.dashboard-container {
+  display: flex;
+  flex: 1;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Main content */
+.main-content {
+  flex-grow: 1;
+  padding: 30px;
+  background: #f2f4f6;
+  overflow-y: auto;
+}
+
+/* Sections */
+.content-section {
+  display: none;
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+  margin-bottom: 30px;
+}
+
+.content-section.active {
+  display: block;
+}
+
+.main-content h2 {
+  font-size: 26px;
+  color: #2c3e50;
+  margin-bottom: 15px;
+  border-bottom: 3px solid #E94D3C;
+  padding-bottom: 10px;
+}
+
+/* Virtual Fridge */
+.fridge-container {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  max-width: 900px;
+  margin: auto;
+}
+
+.fridge-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #eee;
+}
+
+.add-item-btn,
+.save-item-btn,
+.cancel-add-btn,
+.analyzeRecipe-btn {
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: background 0.3s;
+}
+
+.add-item-btn {
+  background: #F87F3B;
+  color: #fff;
+}
+
+.add-item-btn:hover {
+  background: #e2631c;
+}
+
+.save-item-btn {
+  background: #27ae60;
+  color: white;
+}
+
+.save-item-btn:hover {
+  background: #1e944e;
+}
+
+.cancel-add-btn {
+  background: #e74c3c;
+  color: white;
+}
+
+.cancel-add-btn:hover {
+  background: #c0392b;
+}
+
+.analyzeRecipe-btn {
+  background-color: #E94D3C;
+  color: white;
+}
+
+.analyzeRecipe-btn:hover {
+  background-color: #c83324;
+}
+
+/* Inputs */
+.add-item-form input,
+#recipeName {
+  padding: 10px;
+  font-size: 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* Fridge Items */
+.fridge-items-list {
+  margin-top: 20px;
+}
+
+.fridge-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.fridge-item:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+}
+
+.item-details h4 {
+  margin: 0;
+  font-size: 18px;
+  color: #2c3e50;
+}
+
+.item-details p {
+  margin: 0;
+  font-size: 14px;
+  color: #7f8c8d;
+}
+
+/* Status colors */
+.expired-item {
+  background-color: #ffe0e0;
+  border-left: 5px solid #e74c3c;
+}
+
+.near-expiry-item {
+  background-color: #fff8d5;
+  border-left: 5px solid #f39c12;
+}
+
+.consumed-item {
+  background-color: #e6ffe6;
+  border-left: 5px solid #27ae60;
+  opacity: 0.7;
+  text-decoration: line-through;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    height: 100%;
+    z-index: 1000;
+    transform: translateX(0);
+  }
+
+  .sidebar.active {
+    transform: translateX(250px);
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .main-content {
+    padding: 20px;
+  }
+}

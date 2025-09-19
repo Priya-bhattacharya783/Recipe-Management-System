@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Finder</title>
+    <!-- Inter font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Basic reset and font application */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8fafc; /* Light gray background */
+            color: #334155; /* Dark slate gray text */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 12px; /* Rounded corners */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+            padding: 2rem;
+            margin: 2rem;
+            width: 100%;
+            max-width: 800px; /* Max width for content */
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1a202c; /* Darker text for headings */
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-section {
+            display: flex;
+            gap: 0.75rem;
+            width: 100%;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        }
+
+        .search-section input[type="text"] {
+            flex-grow: 1;
+            padding: 0.75rem 1rem;
+            border: 1px solid #cbd5e1; /* Light gray border */
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            min-width: 180px; /* Ensure input is not too small on mobile */
+        }
+
+        .search-section input[type="text"]:focus {
+            border-color: #6366f1; /* Indigo on focus */
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2); /* Focus ring */
+        }
+
+        .search-section button {
+            padding: 0.75rem 1.5rem;
+            background-color: #6366f1; /* Indigo button */
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+            white-space: nowrap; /* Prevent button text from wrapping */
+        }
+
+        .search-section button:hover {
+            background-color: #4f46e5; /* Darker indigo on hover */
+            transform: translateY(-1px); /* Slight lift on hover */
+        }
+
+        .search-section button:active {
+            transform: translateY(0); /* Reset on click */
+        }
+
+        .loading-indicator {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #6b7280; /* Gray text */
+            display: none; /* Hidden by default */
+            margin-top: 1rem;
+        }
+
+        .recipe-display {
+            display: none; /* Hidden by default */
+            border-top: 1px solid #e2e8f0; /* Light border at the top */
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .recipe-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .recipe-header h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 0.5rem;
+        }
+
+        .recipe-header p {
+            font-size: 1.1rem;
+            color: #475569; /* Slightly lighter text for description */
+            line-height: 1.6;
+        }
+
+        .recipe-image {
+            width: 100%;
+            height: 300px; /* Fixed height for image */
+            object-fit: cover; /* Cover the area, crop if necessary */
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .recipe-meta {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem 0;
+            border-top: 1px dashed #e2e8f0;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+
+        .recipe-meta-item {
+            text-align: center;
+            font-size: 0.95rem;
+            color: #475569;
+        }
+
+        .recipe-meta-item strong {
+            display: block;
+            font-size: 1.1rem;
+            color: #1a202c;
+            margin-bottom: 0.25rem;
+        }
+
+        .recipe-sections {
+            display: grid;
+            grid-template-columns: 1fr; /* Single column by default */
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .recipe-sections {
+                grid-template-columns: 1fr 1fr; /* Two columns on larger screens */
+            }
+        }
+
+        .recipe-section h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #6366f1; /* Underline for section titles */
+            padding-bottom: 0.5rem;
+            display: inline-block; /* Make underline only as wide as text */
+        }
+
+        .recipe-section ul, .recipe-section ol {
+            list-style: none; /* Remove default list styles */
+            padding: 0;
+            margin: 0;
+        }
+
+        .recipe-section ul li, .recipe-section ol li {
+            background-color: #f0f4f8; /* Light background for list items */
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .recipe-section ul li::before {
+            content: '•'; /* Custom bullet point */
+            color: #6366f1;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .recipe-section ol li {
+            counter-increment: instruction-step;
+        }
+
+        .recipe-section ol li::before {
+            content: counter(instruction-step) "."; /* Numbered steps */
+            color: #6366f1;
+            font-weight: bold;
+            font-size: 1.2rem;
+            min-width: 25px; /* Ensure number has space */
+            text-align: right;
+        }
+
+        .error-message {
+            color: #dc2626; /* Red for errors */
+            text-align: center;
+            margin-top: 1rem;
+            display: none; /* Hidden by default */
+            font-weight: 500;
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 600px) {
+            .container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .search-section {
+                flex-direction: column;
+            }
+
+            .search-section input[type="text"],
+            .search-section button {
+                width: 100%;
+            }
+
+            .recipe-header h2 {
+                font-size: 1.75rem;
+            }
+
+            .recipe-image {
+                height: 200px;
+            }
+        }
+    </style>
+
+    <script src="./config.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Find Your Next Delicious Recipe!</h1>
+
+        <div class="search-section">
+            <input type="text" id="recipeSearchInput" placeholder="e.g., Chicken Alfredo, Vegan Chili, Chocolate Cake">
+            <button id="searchButton">Search Recipe</button>
+        </div>
+
+        <div id="loadingIndicator" class="loading-indicator">
+            Searching for your recipe...
+        </div>
+
+        <div id="errorMessage" class="error-message">
+            Could not find the recipe. Please try another search term.
+        </div>
+
+        <div id="recipeDisplay" class="recipe-display">
+            <div class="recipe-header">
+                <h2 id="recipeName"></h2>
+                <p id="recipeDescription"></p>
+            </div>
+            <!-- <img id="recipeImage" src="" alt="Recipe image" class="recipe-image" onerror="this.onerror=null;this.src='https://placehold.co/800x300/e2e8f0/6366f1?text=Recipe+Image';"> -->
+
+            <div class="recipe-meta">
+                <div class="recipe-meta-item">
+                    <strong>Prep Time</strong>
+                    <span id="prepTime"></span>
+                </div>
+                <div class="recipe-meta-item">
+                    <strong>Cook Time</strong>
+                    <span id="cookTime"></span>
+                </div>
+                <div class="recipe-meta-item">
+                    <strong>Servings</strong>
+                    <span id="servings"></span>
+                </div>
+            </div>
+
+            <div class="recipe-sections">
+                <div class="recipe-section">
+                    <h3>Ingredients</h3>
+                    <ul id="ingredientsList"></ul>
+                </div>
+                <div class="recipe-section">
+                    <h3>Instructions</h3>
+                    <ol id="instructionsList"></ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Axios from a CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        
+        const params = new URLSearchParams(window.location.search);
+        const searchQuery = params.get('query'); // "chicken"
+
+        // Get references to DOM elements
+        const recipeSearchInput = document.getElementById('recipeSearchInput');
+        const searchButton = document.getElementById('searchButton');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const errorMessage = document.getElementById('errorMessage');
+        const recipeDisplay = document.getElementById('recipeDisplay');
+
+        const recipeName = document.getElementById('recipeName');
+        const recipeDescription = document.getElementById('recipeDescription');
+        const recipeImage = document.getElementById('recipeImage');
+        const prepTime = document.getElementById('prepTime');
+        const cookTime = document.getElementById('cookTime');
+        const servings = document.getElementById('servings');
+        const ingredientsList = document.getElementById('ingredientsList');
+        const instructionsList = document.getElementById('instructionsList');
+        document.addEventListener('DOMContentLoaded',()=>{
+            const searchQuery = params.get('query'); // "chicken"
+            recipeSearchInput.value = searchQuery;
+        });
+        /**
+         * Fetches recipe data from a backend endpoint using Axios.
+         * The backend is responsible for calling the Gemini API securely.
+         * @param {string} query - The recipe search term.
+         * @returns {Promise<object|null>} - A promise that resolves to the recipe object or null if an error occurs.
+         */
+        async function fetchRecipe(query) {
+            // Show loading indicator and hide previous results/errors
+            loadingIndicator.style.display = 'block';
+            errorMessage.style.display = 'none';
+            recipeDisplay.style.display = 'none';
+            console.log(BACKEND_URL);
+            try {
+                // Call your backend endpoint using Axios
+                // Replace '/api/generate-recipe' with the actual URL of your backend endpoint
+                const response = await axios.post(`${BACKEND_URL}/api/generate-recipe`, { query: query });
+
+                // Axios automatically parses JSON responses, so data is directly available
+                return response.data;
+
+            } catch (error) {
+                console.error('Error fetching recipe from backend:', error);
+                if (error.response) {
+                    console.error('Backend Error Data:', error.response.data);
+                    console.error('Backend Error Status:', error.response.status);
+                }
+                return null;
+            } finally {
+                // Hide loading indicator regardless of success or failure
+                loadingIndicator.style.display = 'none';
+            }
+        }
+
+        /**
+         * Displays the fetched recipe data on the page.
+         * @param {object} recipe - The recipe object to display.
+         */
+        function displayRecipe(recipe) {
+            if (!recipe || !recipe.recipeName) { // Check for recipe object and a key property
+                errorMessage.style.display = 'block';
+                recipeDisplay.style.display = 'none';
+                return;
+            }
+
+            // Populate the recipe details
+            recipeName.textContent = recipe.recipeName;
+            recipeDescription.textContent = recipe.description;
+            // Use the provided imageUrl, with a fallback
+            //recipeImage.src = recipe.imageUrl || 'https://placehold.co/800x300/e2e8f0/6366f1?text=Recipe+Image';
+            prepTime.textContent = recipe.prepTime;
+            cookTime.textContent = recipe.cookTime;
+            servings.textContent = recipe.servings;
+
+            // Clear previous ingredients and instructions
+            ingredientsList.innerHTML = '';
+            instructionsList.innerHTML = '';
+
+            // Add ingredients to the list
+            if (recipe.ingredients && Array.isArray(recipe.ingredients)) {
+                recipe.ingredients.forEach(ingredient => {
+                    const li = document.createElement('li');
+                    li.textContent = ingredient;
+                    ingredientsList.appendChild(li);
+                });
+            }
+
+
+            // Add instructions to the list
+            if (recipe.instructions && Array.isArray(recipe.instructions)) {
+                recipe.instructions.forEach(instruction => {
+                    const li = document.createElement('li');
+                    li.textContent = instruction;
+                    instructionsList.appendChild(li);
+                });
+            }
+
+
+            // Show the recipe display section
+            recipeDisplay.style.display = 'block';
+        }
+
+        // Function to handle the search logic
+        async function performSearch(query) {
+            if (query) {
+                const recipe = await fetchRecipe(query);
+                displayRecipe(recipe);
+            } else {
+                errorMessage.textContent = "Please enter a recipe to search for.";
+                errorMessage.style.display = 'block';
+                recipeDisplay.style.display = 'none';
+            }
+        }
+
+        // Event listener for the search button click
+        searchButton.addEventListener('click', () => {
+            const query = recipeSearchInput.value.trim();
+            performSearch(query);
+        });
+
+
+        // Optional: Allow searching by pressing Enter key in the input field
+        recipeSearchInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                searchButton.click();
+            }
+        });
+
+        // Initial state: hide recipe display and error message
+        recipeDisplay.style.display = 'none';
+        errorMessage.style.display = 'none';
+        loadingIndicator.style.display = 'none';
+        // Check for a 'query' parameter in the URL on page load and trigger a search
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const searchQuery = params.get('query');
+
+            if (searchQuery) {
+                recipeSearchInput.value = searchQuery;
+                performSearch(searchQuery);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=,l, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+    <title>Recipe Website</title>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <img src="./RecipeMSLogo.png" alt="Delicious Recipe" class="logo">
+            <!-- <h1 class="logo">Delicious Recipe</h1> -->
+            <nav>
+                <div class="menu-icon" id="menu-icon">&#9776;</div>
+                <ul class="nav-list" id="nav-list">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#About">About</a></li>
+                    <li><a href="#Recipe">Recipe</a></li>
+                    <li><a href="#Contact">Contact us</a></li>
+                    <!-- <li><a href="#">Buy</a></li> -->
+                    <li id="Profile-Container" class="dropdown">
+                        <i class="fa-solid fa-user" id="profile-icon"></i>
+                        <div id="profile-dropdown" class="dropdown-content">
+                            <p id="welcome-message">Hello, User!</p>
+                            <a id="Dashboard-anchor">Dashboard</a>
+                            <a id="Login-anchor">Login</a>
+                            <a id="logout-link"  href="#" >Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <section class="hero">
+        <div class="hero-section">
+            <h2>Welcome to our recipe collections!</h2>
+            <p>Search any types of recipes to satisfy your craving..</p>
+
+            <form action="#" class="search-box">
+                <input type="text" id="search-recipe-input" placeholder="Enter a recipe name to explore our guidance">
+                <button id="search-recipe-btn" type="submit">Search</button>
+            </form>
+        </div>
+    </section>
+
+    <section class="smart-generator">
+        <h2>Let AI Help You Decide!</h2>
+        <p>
+            Have ingredients but unsure what to make? Use our AI-powered smart recipe generator to create delicious meals in seconds!
+        </p>
+        <button id="search-recipe-by-ingredients-btn" >Try the Smart Generator</button>
+    </section>
+
+    <section class="recipes" id="Recipe">
+        <h1>Featured Recipes</h1>
+        <div class="recipe-section">
+            <div class="recipe-card">
+                <img src="dish-1.jpg" alt="">
+                <h2>Strawberry Ice</h2>
+                <p> It is very delicious and luscious custard can be served instead of icecream after meals.. </p>
+                <a href="./featured1.html">View Recipe</a>
+            </div>
+
+            <div class="recipe-card">
+                <img src="dish-2.jpg" alt="">
+                <h2>Egg Drop Curry</h2>
+                <p>It is a simple, light and delicious side dish which fits so well with steamed rice or chapati..</p>
+                <a href="./featured2.html">View Recipe</a>
+            </div>
+
+            <div class="recipe-card">
+                <img src="dish-3.jpg" alt="">
+                <h2>Chicken Tikka</h2>
+                <p>Tandoori chicken is an Indian recipe, in which the meat is flavoured with yoghurt and spices, and then roasted.. </p>
+                <a href="./featured3.html">View Recipe</a>
+            </div>
+            
+            
+            <div class="recipe-card">
+                <img src="dish-4.jpg" alt="">
+                <h2>Steak salad </h2>
+                <p>This is seriously the best salad recipe that you can make at home in under 20 minutes.. </p>
+                <a href="./featured4.html">View Recipe</a>
+            </div>
+
+            <div class="recipe-card">
+                <img src="fish-dish.jpg" alt="">
+                <h2>Masala Fish Fry</h2>
+                <p>It is a delicious fish fillets or steaks coated in a fiery, aromatic spice blend and then pan-fried until crispy.. </p>
+                <a href="./featured5.html">View Recipe</a>
+            </div>
+
+            <div class="recipe-card">
+                <img src="biriyani.jpg" alt="">
+                <h2>Madras Chicken Biriyani</h2>
+                <p>It is a delicious, spicy, tangy, and aromatic rice dish that differs from other regional biryanis by its use of local spices, cooking techniques.. </p>
+                <a href="./featured6.html">View Recipe</a>
+            </div>
+
+        </div>
+    </section>
+
+   <section class="about-us" id="About">
+        <h2>About Us</h2>
+        <p>
+            Welcome to <strong>Delicious Recipe</strong>! We’re here to make cooking easier, smarter, and more fun. Whether you're a home cook or a food enthusiast, our platform helps you find the perfect recipe based on your ingredients, cravings, or time.
+        </p>
+        <p>
+            With the power of our <strong>AI-powered Smart Recipe Generator</strong>, you’ll never wonder “what to cook” again. Just enter what you have or what you’re craving, and our intelligent system will instantly suggest recipes tailored to your needs.
+        </p>
+        <p>
+            Our <strong>Virtual Fridge</strong> helps you use what’s already in your kitchen — simply input your ingredients, and we’ll provide recipe options that reduce food waste and maximize flavor. With the <strong>Meal Planner</strong>, you can organize your weekly meals effortlessly and generate shopping lists in a click.
+        </p>
+        <p>
+            To support healthy living, our <strong>Smart Nutrition Analyzer</strong> offers detailed insights into the nutritional value of every dish, helping you make informed choices and track your goals easily.
+        </p>
+        <p>
+            Explore, experiment, and enjoy food like never before. Whether you're planning meals, checking nutrition, or using up leftovers, <strong>Your Site Name</strong> brings intelligence to your kitchen. Happy cooking! 🍳
+        </p>
+    </section>
+    <div class="footer" id="Contact">
+        <div class="foot">
+            <h2>Recipe Hub | Contact us</h2>
+
+            <div class="icons">
+                <a id="wsp-Logo" href="https://wa.me/8282927729" target="_blank">
+                    <img src="https://1000logos.net/wp-content/uploads/2021/04/WhatsApp-logo.png" alt="WhatsApp" />
+                </a>
+                <a href="mailto:priyabhattacharya2005@gmail.com" target="_blank">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_FDIGmrOKufJ8B_6XNbHRz5m_yBubLlpykw&usqp=CAU" alt="Email" />
+                </a>
+                </div>
+
+                <h3>Website Created and Designed by</h3>
+                <p>Priya Bhattacharya</p>
+            </div>
+    </div>
+
+    
+  <script src="script.js"></script>
+</body>
+</html>

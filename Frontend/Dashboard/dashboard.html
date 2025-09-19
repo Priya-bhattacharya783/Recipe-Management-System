@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" xintegrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../config.js"></script>
+</head>
+<body>
+    <header class="navbar">
+        <button class="menu-toggle" aria-label="Toggle menu">&#9776;</button>
+        <div class="dashboard-title" id="dashboard-user-name">Welcome User</div>
+    </header>
+
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <nav>
+                <ul>
+                    <li><a href="#" id="home-link" class="sidebar-item" data-content="home-content">Home</a></li>
+                    <li><a href="#" id="profile-link" class="sidebar-item" data-content="profile-content">Profile</a></li>
+                    <li><a href="#" id="fridge-link" class="sidebar-item active" data-content="virtual-fridge-content">Virtual Fridge</a></li>
+                    <li><a href="#" id="nutrition-link" class="sidebar-item" data-content="nutrition-analyzer-content">Nutrition Analyzer</a></li>
+                    <li><a href="#" id="settings-link" class="sidebar-item" data-content="settings-content">Settings</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <section id="profile-content" class="content-section">
+                <h2>Profile Overview</h2>
+                <p>Welcome to your profile! Here you can manage your personal information.</p>
+                <h3>Name: <span id="profile-name"></span></h3>
+                <h3>Email: <span id="profile-email"></span></h3>
+            </section>
+    <!-- Virtual Fridge -->
+            <section id="virtual-fridge-content" class="content-section active">
+                <h2>Virtual Fridge</h2>
+                <p>Track your food items and their expiry dates here.</p>
+                <div class="fridge-container">
+                    <div class="fridge-header">
+                        <h3>My Food Items</h3>
+                        <button id="addItemBtn" class="add-item-btn">Add New Item</button>
+                    </div>
+
+                    <div class="add-item-form-container" id="addItemFormContainer" style="display: none;">
+                        <div class="add-item-form">
+                            <input type="text" id="itemName" placeholder="Item Name" required>
+                            <input type="date" id="expiryDate" required>
+                            <button id="saveItemBtn" class="save-item-btn">Save Item</button>
+                            <button id="cancelAddBtn" class="cancel-add-btn">Cancel</button>
+                        </div>
+                    </div>
+
+                    <div class="fridge-items-list" id="fridgeItemsList">
+                        <p id="noItemsMessage">Your fridge is empty! Add some items.</p>
+                    </div>
+                </div>
+            </section>
+
+    <!-- Nutrition Analyzer -->
+            <section id="nutrition-analyzer-content" class="content-section">
+                <h2>Nutrition Analyzer</h2>
+                <p>Analyze the nutritional content of your meals.</p>
+                <input type="text" id="recipeName" placeholder="Enter your recipe" required>
+                <button id="analyzeRecipeBtn" class="analyzeRecipe-btn">Analyze</button>
+
+                <p id="analyzedNutrition"></p>
+                <div id="loading-indicator" style="display: none; text-align: center; margin-top: 15px;">
+                    <i class="fa-solid fa-spinner fa-spin fa-2x"></i>
+                    <p>Analyzing recipe...</p>
+                </div>
+            </section>
+
+            <section id="settings-content" class="content-section">
+                <h2>Settings</h2>
+                <p>Configure your dashboard settings.</p>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

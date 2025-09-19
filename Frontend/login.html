@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuthFlow</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Axios CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="./config.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5; /* Light gray background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .form-container {
+            background-color: #ffffff;
+            padding: 2.5rem; /* 40px */
+            border-radius: 1rem; /* 16px */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Soft shadow */
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .input-field {
+            width: 100%;
+            padding: 0.75rem 1rem; /* 12px vertical, 16px horizontal */
+            margin-bottom: 1rem; /* 16px */
+            border: 1px solid #d1d5db; /* Light gray border */
+            border-radius: 0.5rem; /* 8px */
+            outline: none;
+            transition: border-color 0.2s ease-in-out;
+        }
+        .input-field:focus {
+            border-color: #4f46e5; /* Indigo focus border */
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2); /* Light indigo shadow on focus */
+        }
+        .btn {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+        }
+        .btn-primary {
+            background-color: #4f46e5; /* Indigo */
+            color: #ffffff;
+        }
+        .btn-primary:hover {
+            background-color: #4338ca; /* Darker indigo on hover */
+            transform: translateY(-1px);
+        }
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        .btn-secondary {
+            background-color: #e0e7ff; /* Light indigo */
+            color: #4f46e5; /* Indigo */
+        }
+        .btn-secondary:hover {
+            background-color: #c7d2fe; /* Lighter indigo on hover */
+            transform: translateY(-1px);
+        }
+        .btn-secondary:active {
+            transform: translateY(0);
+        }
+        .toggle-link {
+            color: #4f46e5;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: color 0.2s ease-in-out;
+        }
+        .toggle-link:hover {
+            color: #4338ca;
+        }
+        .message-box {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            text-align: center;
+            max-width: 300px;
+            width: 90%;
+            display: none; /* Hidden by default */
+        }
+        .message-box.show {
+            display: block;
+        }
+        .message-box button {
+            background-color: #4f46e5;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        .message-box button:hover {
+            background-color: #4338ca;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2 id="form-title" class="text-3xl font-bold text-gray-800 mb-6">Login</h2>
+
+        <!-- Login Form -->
+        <form id="login-form" class="space-y-4" action="/login" method="post">
+            <input type="email" name="email" id="login-email" placeholder="Enter your email" class="input-field" required>
+            <input type="password" name="password" id="login-password" placeholder="Enter your password" class="input-field" required>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+
+        <!-- Register Form (hidden by default) -->
+        <form id="register-form" class="space-y-4 hidden" action="/register" method="post">
+            <input type="text" name="name" id="register-name" placeholder="Enter your name" class="input-field" required>
+            <input type="email" name="email" id="register-email" placeholder="Enter your email" class="input-field" required>
+            <input type="password" name="password" id="register-password" placeholder="Create a password" class="input-field" required>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+
+        <p class="mt-6 text-gray-600">
+            <span id="toggle-text">Don't have an account?</span>
+            <a href="#" id="toggle-auth" class="toggle-link">Sign Up</a>
+        </p>
+    </div>
+
+    <!-- Message Box for alerts -->
+    <div id="message-box" class="message-box">
+        <p id="message-text"></p>
+        <button onclick="hideMessageBox()">OK</button>
+    </div>
+
+    <script>
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const formTitle = document.getElementById('form-title');
+        const toggleAuthLink = document.getElementById('toggle-auth');
+        const toggleText = document.getElementById('toggle-text');
+        const messageBox = document.getElementById('message-box');
+        const messageText = document.getElementById('message-text');
+
+        let isLogin = true;
+
+        // Function to show custom message box
+        function showMessageBox(message) {
+            messageText.textContent = message;
+            messageBox.classList.add('show');
+        }
+
+        // Function to hide custom message box
+        function hideMessageBox() {
+            messageBox.classList.remove('show');
+        }
+
+        toggleAuthLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (isLogin) {
+                // Switch to Register
+                loginForm.classList.add('hidden');
+                registerForm.classList.remove('hidden');
+                formTitle.textContent = 'Sign Up';
+                toggleText.textContent = 'Already have an account?';
+                toggleAuthLink.textContent = 'Login';
+            } else {
+                // Switch to Login
+                registerForm.classList.add('hidden');
+                loginForm.classList.remove('hidden');
+                formTitle.textContent = 'Login';
+                toggleText.textContent = "Don't have an account?";
+                toggleAuthLink.textContent = 'Sign Up';
+            }
+            isLogin = !isLogin;
+        });
+
+        // Handle form submissions via JavaScript to prevent full page reload and show messages
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = e.target.elements['login-email'].value;
+            const password = e.target.elements['login-password'].value;
+
+            try {
+                const response = await axios.post(`${BACKEND_URL}/api/auth/login`,{ email, password });
+                const data = response.data; // Axios puts the response body in .data
+                
+                showMessageBox(data.message + " Redirecting...");
+                // Store token (e.g., in localStorage) and redirect
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('userEmail', data.userEmail); // Store user email for dashboard
+                localStorage.setItem('userName', data.userName); // Store user email for dashboard
+
+                setTimeout(() => {
+                    currentURL = window.location.href;
+                    window.location.href = `${currentURL.substring(0,currentURL.lastIndexOf('/'))}/Dashboard/dashboard.html`; // Redirect to a protected dashboard
+                }, 1500);
+            } catch (error) {
+                console.error('Error:', error);
+                // Axios puts error response in error.response.data
+                showMessageBox(error.response?.data?.message || 'An error occurred during login.');
+            }
+        });
+
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = e.target.elements['register-name'].value;
+            const email = e.target.elements['register-email'].value;
+            const password = e.target.elements['register-password'].value;
+
+            try {
+                const response = await axios.post(`${BACKEND_URL}/api/auth/register`, { name, email, password });
+                const data = response.data; // Axios puts the response body in .data
+
+                showMessageBox(data.message + " You can now login.");
+                // After successful registration, switch to login form
+                setTimeout(() => {
+                    loginForm.classList.remove('hidden');
+                    registerForm.classList.add('hidden');
+                    formTitle.textContent = 'Login';
+                    toggleText.textContent = "Don't have an account?";
+                    toggleAuthLink.textContent = 'Sign Up';
+                    isLogin = true;
+                    hideMessageBox(); // Hide message box after switching forms
+                }, 1500);
+            } catch (error) {
+                console.error('Error:', error);
+                // Axios puts error response in error.response.data
+                showMessageBox(error.response?.data?.message || 'An error occurred during registration.');
+            }
+        });
+    </script>
+</body>
+</html>
