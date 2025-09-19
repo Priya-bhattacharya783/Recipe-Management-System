@@ -30,9 +30,12 @@ header{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    
 }
-
+.logo-group {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+}
 
 /* Base styles for nav ul (desktop first approach for display) */
 nav ul {
@@ -180,6 +183,12 @@ nav ul li a {
     }
     .hero p {
         font-size: 15px;
+    }
+
+    .logo-group {
+        display: flex;
+        align-items: center;
+        font-size: 10px;
     }
 }
 
@@ -503,4 +512,8 @@ nav ul li a {
     left: -3%;
     height: 48px;
     border-radius: 50%;
+}
+
+.logo-text{
+    font-family: math;
 }
